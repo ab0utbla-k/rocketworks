@@ -1,0 +1,17 @@
+---
+oneOf:
+  - const: PENDING_PAYMENT
+    description: Order is waiting for payment to be processed
+  - const: PAID
+    description: Order has been successfully paid for
+  - const: CANCELLED
+    description: Order has been cancelled
+x-enum-varnames:
+  - PENDING_PAYMENT
+  - PAID
+  - CANCELLED
+x-enum-values:
+  - 0
+  - 1
+  - 2
+example: PAID

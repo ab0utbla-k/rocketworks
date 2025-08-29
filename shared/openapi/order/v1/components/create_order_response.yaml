@@ -1,0 +1,17 @@
+---
+type: object
+required:
+  - order_uuid
+  - total_price
+properties:
+  order_uuid:
+    type: string
+    format: uuid
+    description: Unique identifier for the created order
+    example: "789e0123-e45b-67d8-a901-234567890abc"
+  total_price:
+    type: number
+    format: double
+    minimum: 0
+    description: Total price of the order in USD
+    example: 289.50

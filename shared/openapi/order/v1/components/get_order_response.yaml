@@ -1,0 +1,37 @@
+type: object
+properties:
+  order_uuid:
+    type: string
+    format: uuid
+    description: Unique identifier for the order
+  user_uuid:
+    type: string
+    format: uuid
+    description: Unique identifier for the user who placed the order
+  part_uuids:
+    type: array
+    items:
+      type: string
+      format: uuid
+    description: List of part UUIDs included in the order
+  total_price:
+    type: number
+    format: double
+    example: 123.45
+    description: Total price of the order
+  transaction_uuid:
+    type: string
+    format: uuid
+    description: Unique identifier for the payment transaction
+  payment_method:
+    $ref: "./enums/payment_method.yaml"
+  status:
+    $ref: "./enums/order_status.yaml"
+required:
+  - order_uuid
+  - user_uuid
+  - part_uuids
+  - total_price
+  - transaction_uuid
+  - payment_method
+  - status
