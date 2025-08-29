@@ -1,0 +1,21 @@
+---
+oneOf:
+  - const: UNKNOWN
+    description: Default/unspecified payment method
+  - const: CARD
+    description: Generic card payment
+  - const: CREDIT_CARD
+    description: Credit card payment
+  - const: INVESTOR_MONEY
+    description: Investor money payment
+x-enum-varnames:
+  - UNKNOWN
+  - CARD
+  - CREDIT_CARD
+  - INVESTOR_MONEY
+x-enum-values:
+  - 0
+  - 1
+  - 2
+  - 3
+example: CARD
