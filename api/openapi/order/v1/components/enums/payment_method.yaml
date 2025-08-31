@@ -1,0 +1,16 @@
+---
+type: string
+enum:
+  - UNKNOWN
+  - DEBIT_CARD
+  - BANK_TRANSFER
+  - CREDIT_CARD
+  - CRYPTO
+description: Payment method options
+x-enum-varnames:
+  - UNKNOWN
+  - DEBIT_CARD
+  - BANK_TRANSFER
+  - CREDIT_CARD
+  - CRYPTO
+example: DEBIT_CARD

@@ -1,0 +1,33 @@
+---
+post:
+  summary: Pay for an order
+  description: |
+    Processes payment for an existing order using the specified payment method.
+    Returns a transaction UUID for tracking the payment.
+  operationId: payOrder
+  tags:
+    - Orders
+
+  parameters:
+    - $ref: "../params/order_uuid.yaml"
+
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../components/pay_order_request.yaml"
+
+  responses:
+    "200":
+      description: Payment processed successfully
+      content:
+        application/json:
+          schema:
+            $ref: "../components/pay_order_response.yaml"
+    "404":
+      description: Order not found
+      content:
+        application/json:
+          schema:
+            $ref: "../components/error_response.yaml"

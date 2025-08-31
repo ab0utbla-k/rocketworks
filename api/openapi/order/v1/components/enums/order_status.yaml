@@ -1,0 +1,12 @@
+---
+type: string
+enum:
+  - PENDING_PAYMENT
+  - PAID
+  - CANCELLED
+description: Order status options
+x-enum-varnames:
+  - PENDING_PAYMENT
+  - PAID
+  - CANCELLED
+example: PAID
