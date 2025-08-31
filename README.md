@@ -41,16 +41,10 @@ openapi-generator generate -i api/openapi/order/v1/order.openapi.yaml -g go -o .
 openapi-generator generate -i api/openapi/order/v1/order.openapi.yaml -g html2 -o ./docs
 ```
 
-### Bundle OpenAPI Spec (resolve all $ref)
+### Bundle OpenAPI Spec
 
-**Using Redocly CLI (if you have `openapi` command):**
 ```bash
-openapi bundle api/openapi/order/v1/order.openapi.yaml -o ./bundled/order.yaml
-```
-
-**Using OpenAPI Generator:**
-```bash
-openapi-generator generate -i api/openapi/order/v1/order.openapi.yaml -g openapi-yaml -o ./bundled
+redocly bundle order.openapi.yaml -o order.bundled.yaml
 ```
 
 ## API Endpoints

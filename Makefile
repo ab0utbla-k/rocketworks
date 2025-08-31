@@ -32,7 +32,7 @@ FAIL	= (echo ${TIME} ${RED}[FAIL]${CNone} && false)
 .PHONY: generate
 generate: ## Generate server code from OpenAPI spec
 	@$(INFO) Bundling OpenAPI spec
-	@openapi bundle order.openapi.yaml -o order.bundled.yaml
+	@redocly bundle order.openapi.yaml -o order.bundled.yaml
 	@$(INFO) Generating Go server code
 	@openapi-generator generate -i order.bundled.yaml -g go-server -o ./generated/server
 	@$(OK) Generated server code from OpenAPI spec
