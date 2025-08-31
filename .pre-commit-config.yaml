@@ -10,4 +10,3 @@ repos:
     rev: v2.4.0
     hooks:
       - id: golangci-lint
-        stages: [pre-commit]

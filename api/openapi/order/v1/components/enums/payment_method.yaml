@@ -1,0 +1,25 @@
+---
+oneOf:
+  - const: UNKNOWN
+    description: Unknown method
+  - const: DEBIT_CARD
+    description: Debit card
+  - const: BANK_TRANSFER
+    description: Bank transfer
+  - const: CREDIT_CARD
+    description: Credit card
+  - const: CRYPTO
+    description: Cryptocurrency
+x-enum-varnames:
+  - UNKNOWN
+  - DEBIT_CARD
+  - BANK_TRANSFER
+  - CREDIT_CARD
+  - CRYPTO
+x-enum-values:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+example: DEBIT_CARD

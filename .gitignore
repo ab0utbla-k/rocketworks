@@ -30,3 +30,8 @@ go.work.sum
 # Editor/IDE
 # .idea/
 # .vscode/
+
+# Generated code and bundled specs
+generated/
+*.bundled.yaml
+*.bundled.yml
