@@ -4,6 +4,10 @@ BIN ?= $(BREW_PREFIX)/bin
 ## Tool Binaries
 GOLANGCI_LINT ?= $(BIN)/golangci-lint
 
+## OpenAPI Configuration
+OPENAPI_SPEC_DIR ?= api/openapi/order/v1
+OPENAPI_SPEC_FILE ?= $(OPENAPI_SPEC_DIR)/order.openapi.yaml
+
 # ====================================================================================
 # Colors
 
@@ -32,7 +36,7 @@ FAIL	= (echo ${TIME} ${RED}[FAIL]${CNone} && false)
 .PHONY: generate
 generate: ## Generate server code from OpenAPI spec
 	@$(INFO) Bundling OpenAPI spec
-	@redocly bundle order.openapi.yaml -o order.bundled.yaml
+	@redocly bundle $(OPENAPI_SPEC_FILE) -o order.bundled.yaml
 	@$(INFO) Generating Go server code
 	@openapi-generator generate -i order.bundled.yaml -g go-server -o ./generated/server
 	@$(OK) Generated server code from OpenAPI spec
