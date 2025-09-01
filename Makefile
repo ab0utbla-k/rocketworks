@@ -53,7 +53,7 @@ clean-generated: ## Clean generated files
 .PHONY: lint
 lint: ## Run golangci-lint
 	@if ! $(GOLANGCI_LINT) run; then \
-		echo -e "\033[0;33mgolangci-lint failed: some checks can be fixed with \`\033[0;32mmake fmt\033[0m\033[0;33m\`\033[0m"; \
+		printf "\033[0;33mgolangci-lint failed: some checks can be fixed with \`\033[0;32mmake fmt\033[0m\033[0;33m\`\033[0m\n"; \
 		exit 1; \
 	fi
 	@$(OK) Finished linting
