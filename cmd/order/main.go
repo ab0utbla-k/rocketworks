@@ -1,29 +1,28 @@
 package main
 
 import (
-	"context"
-	"errors"
-	"log"
+	"log/slog"
 	"net"
 	"net/http"
 	"os"
-	"os/signal"
-	"syscall"
 	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/render"
 
-	"github.com/ab0utbla-k/rocketworks/pkg/utils"
+	"github.com/ab0utbla-k/rocketworks/pkg/httputil"
+	"github.com/ab0utbla-k/rocketworks/pkg/server"
 )
 
 func main() {
+	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
 	r := chi.NewRouter()
 
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Timeout(10 * time.Second))
+	// Can be safely removed if I use content type in WriteJSON. Think about it
 	r.Use(render.SetContentType(render.ContentTypeJSON))
 
 	data := map[string]any{
@@ -35,50 +34,17 @@ func main() {
 	}
 
 	r.Get("/healthcheck", func(w http.ResponseWriter, r *http.Request) {
-		_ = utils.WriteJSON(w, http.StatusOK, data, nil)
+		err := httputil.WriteJSON(w, http.StatusOK, data, nil)
+		if err != nil {
+			httputil.LogError(logger, r, err)
+		}
 	})
 
-	srv := &http.Server{
-		Addr:         net.JoinHostPort("localhost", "8080"),
-		Handler:      r,
-		IdleTimeout:  time.Minute,
-		ReadTimeout:  5 * time.Second,
-		WriteTimeout: 10 * time.Second,
-	}
-
-	shutdownError := make(chan error)
-
-	go func() {
-		quit := make(chan os.Signal, 1)
-		signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
-		s := <-quit
-
-		// change
-		log.Println("caught signal", "signal", s.String())
-
-		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-		defer cancel()
-
-		err := srv.Shutdown(ctx)
-		if err != nil {
-			shutdownError <- err
-		}
-
-		// change
-		log.Println("completing background tasks", "addr", srv.Addr)
-		shutdownError <- nil
-	}()
-
-	log.Println("starting server", "addr", srv.Addr, "env", "dev")
-	err := srv.ListenAndServe()
-	if !errors.Is(err, http.ErrServerClosed) {
-		log.Fatalln("Boom")
-		os.Exit(1)
-	}
-
-	err = <-shutdownError
+	srv := server.New(logger)
+	addr := net.JoinHostPort("localhost", "8080")
+	err := srv.Serve(addr, r)
 	if err != nil {
-		log.Fatalln("Boom2")
+		logger.Error(err.Error())
 		os.Exit(1)
 	}
 }
